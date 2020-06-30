@@ -9,10 +9,14 @@ FROM $BUILD_FROM
 
 MAINTAINER Ryan Northey <ryan@synca.io>
 
+USER root
+
 RUN apt update \
 	&& apt install -y -qq --no-install-recommends net-tools \
         && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
         && apt-get clean
+
+USER odoo
 
 HEALTHCHECK --interval=10s --timeout=1s --retries=5 \
 	CMD netstat -plnt | grep 8069
